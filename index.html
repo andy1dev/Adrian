@@ -13,9 +13,9 @@
 <link rel="preload" as="image" href="https://i.postimg.cc/Ny9FH0gm/Help.jpg">
 <link rel="preload" as="image" href="https://i.postimg.cc/bG7JHjJt/Enjoy.jpg">
 <link rel="preload" as="image" href="https://i.postimg.cc/FfMRgQRj/Dance.jpg">
-<link rel="preload" as="image" href="https://i.postimg.cc/FfMRgQRS/Wish.png">
+<link rel="preload" as="image" href="https://i.ibb.co/hRHKKkDC/pray.jpg">
 <link rel="preload" as="image" href="https://i.postimg.cc/XZRJc0JZ/Travel.jpg">
-<link rel="preload" as="image" href="https://i.postimg.cc/B8r6cG6b/Receive.jpg">
+<link rel="preload" as="image" href="https://i.ibb.co/LhhSv3Jy/bake.jpg">
 <link rel="preload" as="image" href="https://i.postimg.cc/d7k3y0q8/Play.jpg">
 <link rel="preload" as="image" href="https://i.postimg.cc/946MtjMT/Paint.jpg">
 <link rel="preload" as="image" href="https://i.postimg.cc/zLbvgfJT/Cook.jpg">
@@ -524,7 +524,6 @@ h1 {
     <div class="verbo" id="verbo">Celebrate</div>
     <div class="formas">
       <div class="forma"><small>Pasado</small><strong id="pasado">Celebrated</strong></div>
-      <div class="forma"><small>Español</small><strong id="espanol">Celebrar</strong></div>
     </div>
     <img class="foto" id="foto" alt="" referrerpolicy="no-referrer">
     <div class="acciones">
@@ -536,21 +535,21 @@ h1 {
 
 <script>
 /* =========================================================
-   DATOS: verbo (en la ruleta), pasado, español, imagen y emoji
+   DATOS: verbo (en la ruleta), pasado, imagen y emoji
    (el emoji solo se usa si la imagen no puede cargar)
    ========================================================= */
 const VERBOS = [
-  { base: "Celebrate", pasado: "Celebrated", espanol: "Celebrar",  imagen: "https://illustoon.com/photo/12421.png", emoji: "🎉" },
-  { base: "Decorate",  pasado: "Decorated",  espanol: "Decorar",   imagen: "https://i.postimg.cc/1gnXqz9g/Decorate.png",  emoji: "🎄" },
-  { base: "Help",      pasado: "Helped",     espanol: "Ayudar",    imagen: "https://i.postimg.cc/Ny9FH0gm/Help.jpg",      emoji: "🤝" },
-  { base: "Enjoy",     pasado: "Enjoyed",    espanol: "Disfrutar", imagen: "https://i.postimg.cc/bG7JHjJt/Enjoy.jpg",     emoji: "😄" },
-  { base: "Dance",     pasado: "Danced",     espanol: "Bailar",    imagen: "https://i.postimg.cc/FfMRgQRj/Dance.jpg",     emoji: "💃" },
-  { base: "Wish",      pasado: "Wished",     espanol: "Desear",    imagen: "https://i.postimg.cc/FfMRgQRS/Wish.png",      emoji: "🌠" },
-  { base: "Travel",    pasado: "Traveled",   espanol: "Viajar",    imagen: "https://i.postimg.cc/XZRJc0JZ/Travel.jpg",    emoji: "✈️" },
-  { base: "Receive",   pasado: "Received",   espanol: "Recibir",   imagen: "https://i.postimg.cc/B8r6cG6b/Receive.jpg",   emoji: "🎁" },
-  { base: "Play",      pasado: "Played",     espanol: "Jugar",     imagen: "https://i.postimg.cc/d7k3y0q8/Play.jpg",      emoji: "⚽" },
-  { base: "Paint",     pasado: "Painted",    espanol: "Pintar",    imagen: "https://i.postimg.cc/946MtjMT/Paint.jpg",     emoji: "🎨" },
-  { base: "Cook",      pasado: "Cooked",     espanol: "Cocinar",   imagen: "https://i.postimg.cc/zLbvgfJT/Cook.jpg",      emoji: "🍳" }
+  { base: "Celebrate", pasado: "Celebrated", imagen: "https://illustoon.com/photo/12421.png", emoji: "🎉" },
+  { base: "Decorate",  pasado: "Decorated",  imagen: "https://i.postimg.cc/1gnXqz9g/Decorate.png",  emoji: "🎄" },
+  { base: "Help",      pasado: "Helped",     imagen: "https://i.postimg.cc/Ny9FH0gm/Help.jpg",      emoji: "🤝" },
+  { base: "Enjoy",     pasado: "Enjoyed",    imagen: "https://i.postimg.cc/bG7JHjJt/Enjoy.jpg",     emoji: "😄" },
+  { base: "Dance",     pasado: "Danced",     imagen: "https://i.postimg.cc/FfMRgQRj/Dance.jpg",     emoji: "💃" },
+  { base: "Pray",      pasado: "Prayed",     imagen: "https://i.ibb.co/hRHKKkDC/pray.jpg",          emoji: "🙏" },
+  { base: "Travel",    pasado: "Traveled",   imagen: "https://i.postimg.cc/XZRJc0JZ/Travel.jpg",    emoji: "✈️" },
+  { base: "Bake",      pasado: "Baked",      imagen: "https://i.ibb.co/LhhSv3Jy/bake.jpg",          emoji: "🧁" },
+  { base: "Play",      pasado: "Played",     imagen: "https://i.postimg.cc/d7k3y0q8/Play.jpg",      emoji: "⚽" },
+  { base: "Paint",     pasado: "Painted",    imagen: "https://i.postimg.cc/946MtjMT/Paint.jpg",     emoji: "🎨" },
+  { base: "Cook",      pasado: "Cooked",     imagen: "https://i.postimg.cc/zLbvgfJT/Cook.jpg",      emoji: "🍳" }
 ];
 
 const PALETA = ["#FF8A80", "#FFB570", "#FFD966", "#B5E48C", "#7BDCB5", "#5CCFE6",
@@ -593,6 +592,7 @@ let audio = null;
    ========================================================= */
 const cache = VERBOS.map(v => {
   const img = new Image();
+  if (!v.imagen) return img;
   img.referrerPolicy = "no-referrer";
   img.decoding = "async";
   img.src = v.imagen;
@@ -605,14 +605,16 @@ function imagenRespaldo(i) {
     <rect width="800" height="500" fill="${colores[i]}"/>
     <text x="400" y="220" font-size="220" text-anchor="middle" dominant-baseline="middle">${v.emoji}</text>
     <text x="400" y="430" font-size="54" font-weight="800" font-family="sans-serif"
-          text-anchor="middle" fill="${TEXTO}">${v.espanol}</text></svg>`;
+          text-anchor="middle" fill="${TEXTO}">${v.base}</text></svg>`;
   return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 }
 
 function mostrarFoto(i) {
   const v = VERBOS[i];
-  foto.alt = `${v.base} (${v.espanol})`;
+  foto.alt = v.base;
   foto.onerror = () => { foto.onerror = null; foto.src = imagenRespaldo(i); };
+  // Verbo sin imagen propia: se muestra directamente el dibujo con emoji
+  if (!v.imagen) { foto.onerror = null; foto.src = imagenRespaldo(i); return; }
   // Si la precarga falló se reintenta; si ya cargó, sale al instante desde la memoria
   const fallo = cache[i].complete && cache[i].naturalWidth === 0;
   foto.src = fallo ? v.imagen + "?r=" + Date.now() : v.imagen;
@@ -759,7 +761,6 @@ function abrirResultado(i) {
   tarjeta.style.setProperty("--color", colores[i]);
   $("verbo").textContent = v.base;
   $("pasado").textContent = v.pasado;
-  $("espanol").textContent = v.espanol;
   mostrarFoto(i);
 
   const historial = $("historial");
